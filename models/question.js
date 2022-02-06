@@ -11,10 +11,10 @@ const questionSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  tags: [
+  fields: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Tag",
+      ref: "Field",
     },
   ],
   answers: [
@@ -25,5 +25,5 @@ const questionSchema = new Schema({
   ],
 });
 
-const Question = mongoose.model("User", questionSchema);
+const Question = mongoose.model("Question", questionSchema);
 module.exports = Question;

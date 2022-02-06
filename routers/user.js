@@ -17,8 +17,6 @@ router.post("/users", async (req, res) => {
 
 router.post("/users/login", async (req, res) => {
   try {
-    console.log(req.body.email);
-    console.log(req.body.password);
     const user = await User.findbyCredentials(
       req.body.email,
       req.body.password
@@ -58,20 +56,6 @@ router.post("/users/logoutAll", auth, async (req, res) => {
 router.get("/users/me", auth, async (req, res) => {
   res.send(req.user);
 });
-
-// router.get("/users/:id", async (req, res) => {
-//   const _id = req.params.id;
-
-//   try {
-//     const user = await User.findById(_id);
-//     if (!user) {
-//       return res.status(404).send();
-//     }
-//     res.send(user);
-//   } catch (e) {
-//     res.status(500).send();
-//   }
-// });
 
 router.patch("/users/me", auth, async (req, res) => {
   const updates = Object.keys(req.body);

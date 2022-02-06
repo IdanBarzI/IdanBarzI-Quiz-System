@@ -4,7 +4,7 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const TestSchema = new Schema(
+const testSchema = new Schema(
   {
     title: {
       type: String,
@@ -37,10 +37,10 @@ const TestSchema = new Schema(
       type: String,
       required: true,
     },
-    fieldsOfStudy: [
+    fields: [
       {
-        type: String,
-        required: true,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Field",
       },
     ],
     isReviwable: {
@@ -53,5 +53,5 @@ const TestSchema = new Schema(
   }
 );
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+const Test = mongoose.model("Test", testSchema);
+module.exports = Test;
