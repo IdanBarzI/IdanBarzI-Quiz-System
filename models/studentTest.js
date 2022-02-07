@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const validator = require("validator");
 
-const TestSchema = new Schema(
+const StudentTestSchema = new Schema(
   {
     studenFirstName: {
       type: String,
@@ -39,11 +39,15 @@ const TestSchema = new Schema(
         required: true,
       },
     ],
+    organization : {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Organiization"
+    }
   },
   {
     timestamps: true,
   }
 );
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+const StudentTest = mongoose.model("StudentTest", StudentTestSchema);
+module.exports = StudentTest;
