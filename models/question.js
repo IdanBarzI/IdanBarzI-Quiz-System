@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
+const Answer = require('./answer')
 const Schema = mongoose.Schema;
-const validator = require("validator");
 
 const questionSchema = new Schema({
   title: {
@@ -17,12 +17,22 @@ const questionSchema = new Schema({
       ref: "Field",
     },
   ],
+  organization : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref:"Organiization"
+  },
   answers: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Answer",
     },
   ],
+});
+
+
+questionSchema.pre("save", async function (next) {
+  
+  next();
 });
 
 const Question = mongoose.model("Question", questionSchema);

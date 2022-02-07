@@ -47,6 +47,10 @@ const testSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    organization : {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:"Organiization"
+    }
   },
   {
     timestamps: true,

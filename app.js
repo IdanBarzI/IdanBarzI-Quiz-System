@@ -5,7 +5,11 @@ setup();
 const express = require("express");
 const userRouter = require("./routers/user");
 const questionRouter = require("./routers/question");
-const fieldService = require("./routers/field");
+const fieldRouter = require("./routers/field");
+const organRouter = require('./routers/organization');
+const studentTestsRouter = require('./routers/studentTest')
+const testRouter = require('./routers/test')
+const answerRouter = require('./routers/answerRouter')
 const cors = require("cors");
 const corsOptions = require("./options/corsOptions");
 
@@ -16,7 +20,11 @@ app.use(express.json());
 app.use(cors(corsOptions));
 app.use(userRouter);
 app.use(questionRouter);
-app.use(fieldService);
+app.use(fieldRouter);
+app.use(organRouter);
+app.use(studentTestsRouter);
+app.use(testRouter)
+app.use(answerRouter)
 
 app.listen(port, () => {
   console.log(`app listen on port ${port}`);
