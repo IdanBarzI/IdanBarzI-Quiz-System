@@ -37,20 +37,24 @@ const testSchema = new Schema(
       type: String,
       required: true,
     },
-    fields: [
+    field: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Field",
+    },
+    tags: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Field",
+        ref: "Tag",
       },
     ],
     isReviwable: {
       type: Boolean,
       default: false,
     },
-    organization : {
+    organization: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"Organiization"
-    }
+      ref: "Organiization",
+    },
   },
   {
     timestamps: true,

@@ -18,11 +18,10 @@ const answerSchema = new Schema({
 });
 
 answerSchema.methods.toJSON = function () {
-  user = this;
-  const answerObject = user.toObject();
+  answer = this;
+  const answerObject = answer.toObject();
 
   delete answerObject.isCorrect;
-  delete answerObject.tokens;
 
   return answerObject;
 };

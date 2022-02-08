@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Answer = require('./answer')
+const Answer = require("./answer");
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
@@ -11,15 +11,19 @@ const questionSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  fields: [
+  field: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Field",
+  },
+  tags: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Field",
+      ref: "Tag",
     },
   ],
-  organization : {
+  organization: {
     type: mongoose.Schema.Types.ObjectId,
-    ref:"Organiization"
+    ref: "Organiization",
   },
   answers: [
     {
@@ -29,9 +33,7 @@ const questionSchema = new Schema({
   ],
 });
 
-
 questionSchema.pre("save", async function (next) {
-  
   next();
 });
 

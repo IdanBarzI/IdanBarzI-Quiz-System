@@ -17,11 +17,15 @@ router.post("/users", async (req, res) => {
 
 router.post("/users/login", async (req, res) => {
   try {
-    const user = await User.findbyCredentials(
+    const userr = await User.findbyCredentials(
       req.body.email,
       req.body.password
     );
-    const token = await user.generateAuthToken();
+    const user = await User.findOne({ userr }).populate({
+      path: "organization",
+      populate: { path: "fields" },
+    });
+    const token = await userr.generateAuthToken();
     res.send({ user, token });
   } catch (e) {
     res.status(400).send(e);

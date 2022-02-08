@@ -2,19 +2,31 @@ const Question = require("../models/question");
 
 class QuestionService {
   async getAll(user) {
-    const questions = await Question.find({organization:user.organization})
-      .populate('answers')
-      .populate('fields')
-      .populate('organization');
+    const questions = await Question.find({ organization: user.organization })
+      .populate("answers")
+      .populate("field")
+      .populate("tags")
+      .populate("organization");
     return questions;
   }
 
-  async getQuestionsByField(field,user) {
-    const questions = await Question.find({ field , organization:user.organization });
+  async getQuestionsByField(field, user) {
+    const questions = await Question.find({
+      field,
+      organization: user.organization,
+    });
     return questions;
   }
 
-  async addQuestion(newQuestion,user) {
+  async getQuestionsByTags(tags, user) {
+    const questions = await Question.find({
+      tags,
+      organization: user.organization,
+    });
+    return questions;
+  }
+
+  async addQuestion(newQuestion, user) {
     const question = new Question(newQuestion);
     question.organization = user.organization;
     await question.save();
@@ -33,7 +45,10 @@ class QuestionService {
   }
 
   async deleteQuestion(id) {
-    return await Question.findByIdAndRemove({_id:id}, { useFindAndModify: false });
+    return await Question.findByIdAndRemove(
+      { _id: id },
+      { useFindAndModify: false }
+    );
   }
 }
 
