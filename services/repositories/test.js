@@ -1,10 +1,10 @@
-const Test = require("../models/test");
+const Test = require("../../models/test");
 
 class TestService {
   async getAll(user) {
     const foundTests = await Test.find({ organization: user.organization })
       .populate({ path: "questions", populate: { path: "answers" } })
-      .populate("fields");
+      .populate("field");
     return foundTests;
   }
 

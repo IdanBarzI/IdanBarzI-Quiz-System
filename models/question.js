@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Answer = require("./answer");
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
@@ -7,9 +6,10 @@ const questionSchema = new Schema({
     type: String,
     required: true,
   },
-  isCorrect: {
-    type: Boolean,
-    required: true,
+  isMultipleAnswers:{
+    type:Boolean,
+    required:true,
+    default:false
   },
   field: {
     type: mongoose.Schema.Types.ObjectId,
@@ -23,7 +23,7 @@ const questionSchema = new Schema({
   ],
   organization: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Organiization",
+    ref: "Organization",
   },
   answers: [
     {
@@ -31,11 +31,10 @@ const questionSchema = new Schema({
       ref: "Answer",
     },
   ],
+},{
+  timestamps:true
 });
 
-questionSchema.pre("save", async function (next) {
-  next();
-});
 
 const Question = mongoose.model("Question", questionSchema);
 module.exports = Question;

@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const validator = require("validator");
 
 const StudentTestSchema = new Schema(
   {
@@ -15,6 +14,7 @@ const StudentTestSchema = new Schema(
     studentEmail: {
       type: String,
       required: true,
+      lowercase:true
     },
     studentPhone: {
       type: String,
@@ -29,6 +29,11 @@ const StudentTestSchema = new Schema(
       ref: "Test",
       required: true,
     },
+    studentAnswers:[{
+      type:mongoose.Schema.Types.ObjectId,
+      red:"StudentAnswer",
+      required:true
+    }],
     certificateUrl: {
       type: String,
       required: true,

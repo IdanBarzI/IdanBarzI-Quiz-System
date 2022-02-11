@@ -1,6 +1,5 @@
 const express = require("express");
 const auth = require("../middlewares/auth");
-const Question = require("../models/question");
 const router = new express.Router({ mergeParams: true });
 const { container } = require("../utils/di-setup");
 const questionService = container.resolve("questionService");
@@ -21,6 +20,13 @@ router.get("/qusetions/tags", auth, async (req, res) => {
   const questions = await questionService.getQuestionsByTags(tags, req.user);
   res.send({ questions });
 });
+
+router.get("/question/number-of-tests/:id",auth,async(req,res)=>{
+  const num = await questionService.getNumOfTests(req.params.id)
+  res.send(num)
+})
+
+
 
 router.post("/qusetions", auth, async (req, res) => {
   try {

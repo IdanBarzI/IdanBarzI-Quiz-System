@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const answerSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  isCorrect: {
+const studentAnswerSchema = new Schema({
+  isSelected: {
     type: Boolean,
     required: true,
+  },
+  answer:{
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"Answer",
+      required:true
   }
 });
 
@@ -21,5 +22,5 @@ answerSchema.methods.toJSON = function () {
   return answerObject;
 };
 
-const Answer = mongoose.model("Answer", answerSchema);
-module.exports = Answer;
+const StudentAnswer = mongoose.model("StudentAnswer", studentAnswerSchema);
+module.exports = StudentAnswer;

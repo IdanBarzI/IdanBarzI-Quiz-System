@@ -1,4 +1,5 @@
-const Question = require("../models/question");
+const Question = require("../../models/question");
+const Test =require('../../models/test')
 
 class QuestionService {
   async getAll(user) {
@@ -24,6 +25,13 @@ class QuestionService {
       organization: user.organization,
     });
     return questions;
+  }
+
+  async getNumOfTests(id){
+      const tests = await Test.find(test=>{
+        test.question.includes(id)
+      })
+      return tests.length
   }
 
   async addQuestion(newQuestion, user) {

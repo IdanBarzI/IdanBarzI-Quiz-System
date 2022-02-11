@@ -1,4 +1,4 @@
-const StudentTest = require('../models/studentTest')
+const StudentTest = require('../../models/studentTest')
 
 
 class StudentTestService{
