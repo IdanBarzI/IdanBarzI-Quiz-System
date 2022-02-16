@@ -58,5 +58,13 @@ const testSchema = new Schema(
   }
 );
 
+
+testSchema.pre('save',async function(next){
+  const clientUrl= process.env.LOCAL_CLIENT_URL
+  this.testUrl = `${clientUrl}/student/test/${this._id}`;
+  next()
+})
+
+
 const Test = mongoose.model("Test", testSchema);
 module.exports = Test;

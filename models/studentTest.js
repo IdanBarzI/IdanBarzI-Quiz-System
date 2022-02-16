@@ -35,19 +35,16 @@ const StudentTestSchema = new Schema(
       required:true
     }],
     certificateUrl: {
-      type: String,
-      required: true,
+      type: String
     },
-    fieldsOfStudy: [
-      {
-        type: String,
-        required: true,
-      },
-    ],
-    organization : {
-      type: mongoose.Schema.Types.ObjectId,
-      ref:"Organiization"
-    }
+    // fieldOfStudy:{
+    //     type: String,
+    //     required: true,
+    // },
+    // organization : {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref:"Organiization"
+    // }
   },
   {
     timestamps: true,

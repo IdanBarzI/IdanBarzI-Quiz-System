@@ -13,7 +13,7 @@ const studentAnswerSchema = new Schema({
   }
 });
 
-answerSchema.methods.toJSON = function () {
+studentAnswerSchema.methods.toJSON = function () {
   answer = this;
   const answerObject = answer.toObject();
 

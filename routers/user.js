@@ -21,7 +21,7 @@ router.post("/users/login", async (req, res) => {
       req.body.email,
       req.body.password
     );
-    const user = await User.findOne({ userr }).populate({
+    const user = await User.findOne( userr).populate({
       path: "organization",
       populate: { path: "fields" },
     });

@@ -4,6 +4,7 @@ const router = new express.Router({ mergeParams: true });
 const { container } = require("../utils/di-setup");
 const questionService = container.resolve("questionService");
 
+
 router.get("/qusetions", auth, async (req, res) => {
   const questions = await questionService.getAll(req.user);
   res.send(questions);

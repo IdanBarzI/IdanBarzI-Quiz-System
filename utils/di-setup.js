@@ -5,6 +5,7 @@ const TestService = require("../services/repositories/test");
 const StudentTestService = require("../services/repositories/studentTestService");
 const AnswerService = require("../services/repositories/answerService");
 const TagService = require("../services/repositories/tagService");
+const TestCheckService = require('../services/testCheck/testCheckService')
 
 const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.PROXY,
@@ -12,12 +13,13 @@ const container = awilix.createContainer({
 
 function setup() {
   container.register({
-    questionService: awilix.asClass(QuestionService).transient(),
-    fieldService: awilix.asClass(FieldService).transient(),
-    testService: awilix.asClass(TestService).transient(),
-    studentTestService: awilix.asClass(StudentTestService).transient(),
-    answerService: awilix.asClass(AnswerService).transient(),
-    tagService:awilix.asClass(TagService).transient()
+    questionService: awilix.asClass(QuestionService).singleton(),
+    fieldService: awilix.asClass(FieldService).singleton(),
+    testService: awilix.asClass(TestService).singleton(),
+    studentTestService: awilix.asClass(StudentTestService).singleton(),
+    tagService:awilix.asClass(TagService).singleton(),
+    answerService: awilix.asClass(AnswerService).singleton(),
+    testCheckService : awilix.asClass(TestCheckService).singleton()
   });
 }
 

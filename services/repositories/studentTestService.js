@@ -4,13 +4,15 @@ const StudentTest = require('../../models/studentTest')
 class StudentTestService{
     async getAll(user){
         const allTests = await StudentTest.find({organization:user.organization})
-        return {allTests}
+        return allTests
     }
+
+    
 
     async getByStudent(student,user){
         const {studentFirstName,studentLastName,studentEmail,studentPhone} = student; 
         const tests = await StudentTest.find({studentFirstName,studentLastName,studentEmail,studentPhone,organization:user.organization})
-        return {tests}
+        return tests
     }
 
     async addNewStudentExam(studentExam,user){

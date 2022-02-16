@@ -16,6 +16,11 @@ class TestService {
     return foundTests;
   }
 
+  async getTestById(id){
+    const test = await Test.findById(id)
+    return test;
+  }
+
   async getTestsByTags(tags, user) {
     const foundTests = await Test.find({
       tags,
@@ -29,7 +34,7 @@ class TestService {
     testToAdd.organization = user.organization;
     testToAdd.ownerEmail = user.email;
     await testToAdd.save();
-    return { testToAdd };
+    return testToAdd ;
   }
 
   async updateTest(id, test) {

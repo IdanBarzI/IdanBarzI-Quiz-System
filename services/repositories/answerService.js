@@ -6,6 +6,11 @@ class AnswerService{
         await newAnswer.save()
         return newAnswer;
     }
+
+    async getByTitle(title){
+        const ans = await Answer.findOne({title:title})
+        return ans;
+    }
 }
 
 module.exports = AnswerService

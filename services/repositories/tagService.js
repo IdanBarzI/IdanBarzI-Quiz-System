@@ -4,7 +4,17 @@ class TagService {
   async addTag(tag) {
     const newTag = new Tag(tag);
     await newTag.save();
-    return { newTag };
+    return newTag ;
+  }
+
+  async getAllTags(){
+    const tags = await Tag.find({});
+    return tags;
+  }
+
+  async getByTitle(title){
+    const tag =await Tag.findOne({title:title})
+    return tag
   }
 }
 

@@ -4,6 +4,12 @@ const router = new express.Router();
 const { container } = require("../utils/di-setup");
 const testService = container.resolve("testService");
 
+router.get('/tests/:id',async(req,res)=>{
+   const id = req.params.id;
+   const test = await testService.getTestById(id)
+   res.status(200).send(test)
+})
+
 router.get("/tests", auth, async (req, res) => {
   const tests = await testService.getAll(req.user);
   res.send(tests);
@@ -12,13 +18,14 @@ router.get("/tests", auth, async (req, res) => {
 router.get("/tests/field", auth, async (req, res) => {
   const field = req.body.field;
   const tests = await testService.getTestsByfield(field, req.user);
-  res.send({ tests });
+  res.send( tests);
 });
+
 
 router.get("/tests/tags", auth, async (req, res) => {
   const tags = req.body.tags;
   const tests = await testService.getTestsByTags(tags, req.user);
-  res.send({ tests });
+  res.send(tests );
 });
 
 router.post("/tests", auth, async (req, res) => {

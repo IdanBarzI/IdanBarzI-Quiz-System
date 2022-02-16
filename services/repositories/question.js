@@ -1,7 +1,15 @@
 const Question = require("../../models/question");
 const Test =require('../../models/test')
+const TagService = require('./tagService')
+const AnswerService = require('./answerService')
 
 class QuestionService {
+
+  constructor(tagService,answerService){
+    this._tagService = new TagService()
+    this._answerService = new AnswerService();
+  }
+
   async getAll(user) {
     const questions = await Question.find({ organization: user.organization })
       .populate("answers")
@@ -35,10 +43,39 @@ class QuestionService {
   }
 
   async addQuestion(newQuestion, user) {
-    const question = new Question(newQuestion);
+    let newTags = [];
+    let newQuestions = []
+
+    // await newQuestion.tags.map(async(tag)=>{
+    //   const tagFromRepo = await this._tagService.getByTitle(tag.title)
+    //   if(!tagFromRepo){
+    //     const newTag = await this._tagService.addTag(tag)
+    //     newTags.push(newTag._id);
+    //   }
+    //   else{
+    //     newTags.push(tagFromRepo._id);
+    //   }
+    // })
+    // await newQuestion.answers.map(async(answer)=>{
+    //   const answerFromRepo = await this._answerService.getByTitle(answer.title)
+    //   if(!answerFromRepo){
+    //     const newAnswer = await this._answerService.addAnswer(answer)
+    //     newQuestions.push(newAnswer._id);
+    //   }
+    //   else{
+    //     newQuestions.push(answerFromRepo._id);
+    //   }
+    // })
+
+    // newQuestion.tags = newTags;
+    // newQuestion.questions=newQuestions;
+
+
+    const question = new Question(newQuestion); 
+
     question.organization = user.organization;
     await question.save();
-    return { question };
+    return  question ;
   }
 
   async updateQuestion(id, question) {

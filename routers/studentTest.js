@@ -3,6 +3,7 @@ const auth = require("../middlewares/auth");
 const router = new express.Router();
 const { container } = require("../utils/di-setup");
 const studentTestService = container.resolve("studentTestService");
+const testCheckService = container.resolve('testCheckService')
 
 router.get('/student-test',auth,async(req,res)=>{
     try {
@@ -28,6 +29,16 @@ router.post('/student-test:id',async(req,res)=>{
         res.status(201).send(studentTest)
     } catch (err) {
         res.status(400).send(err)
+    }
+})
+
+
+router.post('/student-test/finished',async(req,res)=>{
+    try {
+        const newStudentTest = await testCheckService.checkTest(req.body)
+        res.status(200).send(newStudentTest)
+    } catch (err) {
+        res.send(err)
     }
 })
 
