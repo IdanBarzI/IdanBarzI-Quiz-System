@@ -16,7 +16,7 @@ answerSchema.methods.toJSON = function () {
   answer = this;
   const answerObject = answer.toObject();
 
-  delete answerObject.isCorrect;
+  //delete answerObject.isCorrect;
 
   return answerObject;
 };

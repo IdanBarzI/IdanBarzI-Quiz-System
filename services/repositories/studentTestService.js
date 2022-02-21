@@ -2,6 +2,11 @@ const StudentTest = require('../../models/studentTest')
 
 
 class StudentTestService{
+    constructor(testCheckService){
+        this._testCheckService=testCheckService
+    }
+
+
     async getAll(user){
         const allTests = await StudentTest.find({organization:user.organization})
         return allTests
@@ -15,11 +20,11 @@ class StudentTestService{
         return tests
     }
 
-    async addNewStudentExam(studentExam,user){
-        const newStudentTest = new StudentTest(studentExam)
-        newStudentTest.organization=user.organization
-        await newStudentTest.save();
-        return newStudentTest
+    async addNewStudentExam(studentExam){
+        const newStudentTest = await this._testCheckService.checkTest(studentExam)
+        const studentTest = new StudentTest(newStudentTest)
+        await studentTest.save();
+        return studentTest
     }
 
     async removeById(id,user){

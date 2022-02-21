@@ -44,7 +44,7 @@ const testSchema = new Schema(
         ref: "Tag",
       },
     ],
-    isReviwable: {
+    isReviewable: {
       type: Boolean,
       default: false,
     },

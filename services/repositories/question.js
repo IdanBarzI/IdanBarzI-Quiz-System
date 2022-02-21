@@ -1,13 +1,12 @@
 const Question = require("../../models/question");
 const Test =require('../../models/test')
-const TagService = require('./tagService')
-const AnswerService = require('./answerService')
+
 
 class QuestionService {
 
   constructor(tagService,answerService){
-    this._tagService = new TagService()
-    this._answerService = new AnswerService();
+    this._tagService = tagService
+    this._answerService = answerService
   }
 
   async getAll(user) {

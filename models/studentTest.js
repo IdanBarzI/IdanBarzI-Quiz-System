@@ -8,7 +8,7 @@ const StudentTestSchema = new Schema(
       required: true,
     },
     studenLastName: {
-      type: Boolean,
+      type: String,
       required: true,
     },
     studentEmail: {

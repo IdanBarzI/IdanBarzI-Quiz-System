@@ -18,7 +18,12 @@ class TestService {
 
   async getTestById(id){
     const test = await Test.findById(id)
-    return test;
+    return test.populate({
+      path:'questions',
+      populate:{
+        path:"answers"
+      }
+    });
   }
 
   async getTestsByTags(tags, user) {
