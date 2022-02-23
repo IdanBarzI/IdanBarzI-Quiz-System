@@ -45,29 +45,32 @@ class QuestionService {
     let newTags = [];
     let newQuestions = []
 
-    // await newQuestion.tags.map(async(tag)=>{
-    //   const tagFromRepo = await this._tagService.getByTitle(tag.title)
-    //   if(!tagFromRepo){
-    //     const newTag = await this._tagService.addTag(tag)
-    //     newTags.push(newTag._id);
-    //   }
-    //   else{
-    //     newTags.push(tagFromRepo._id);
-    //   }
-    // })
-    // await newQuestion.answers.map(async(answer)=>{
-    //   const answerFromRepo = await this._answerService.getByTitle(answer.title)
-    //   if(!answerFromRepo){
-    //     const newAnswer = await this._answerService.addAnswer(answer)
-    //     newQuestions.push(newAnswer._id);
-    //   }
-    //   else{
-    //     newQuestions.push(answerFromRepo._id);
-    //   }
-    // })
+    var tags = newQuestion.tags;
+    for(let tag in tags){
+      const tagFromRepo = await this._tagService.getByTitle(tags[tag].title)
+      if(!tagFromRepo){
+        const newTag = await this._tagService.addTag(tags[tag])
+        newTags.push(newTag._id);
+      }
+      else{
+        newTags.push(tagFromRepo._id);
+      }
+    }
 
-    // newQuestion.tags = newTags;
-    // newQuestion.questions=newQuestions;
+    var answers = newQuestion.answers
+    for(let answer in newQuestion.answers){
+      const answerFromRepo = await this._answerService.getByTitle(answers[answer].title)
+      if(!answerFromRepo){
+        const newAnswer = await this._answerService.addAnswer(answers[answer])
+        newQuestions.push(newAnswer._id.toString());
+      }
+      else{
+        newQuestions.push(answerFromRepo._id.toString());
+      }
+    }
+
+    newQuestion.tags = newTags;
+    newQuestion.answers=newQuestions;
 
 
     const question = new Question(newQuestion); 

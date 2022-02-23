@@ -12,11 +12,23 @@ class StudentTestService{
         return allTests
     }
 
-    
+    async getAllWithTestId(testId,fromDate,toDate,user){
+        const allTests = await StudentTest.find({test:testId,organization:user.organization})
+        if(fromDate>toDate){
+            return null;
+        }
+        if(!fromDate || !toDate){
+            return allTests
+        }
+        else{
+            const filteredByDate = allTests.filter((test)=>(test.createdAt > fromDate&& test.createdAt<toDate ))
+            return filteredByDate
+        }
+    }
 
-    async getByStudent(student,user){
-        const {studentFirstName,studentLastName,studentEmail,studentPhone} = student; 
-        const tests = await StudentTest.find({studentFirstName,studentLastName,studentEmail,studentPhone,organization:user.organization})
+    async getByStudent(studentFirstName,user){
+        var regex = new RegExp("^"+studentFirstName)
+        const tests = await StudentTest.find({studentFirstName:regex,organization:user.organization})
         return tests
     }
 
