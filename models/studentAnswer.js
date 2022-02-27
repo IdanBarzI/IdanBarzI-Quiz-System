@@ -10,14 +10,20 @@ const studentAnswerSchema = new Schema({
       type:mongoose.Schema.Types.ObjectId,
       ref:"Answer",
       required:true
+  },
+  question:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"Question",
+    required:true
   }
+
 });
 
 studentAnswerSchema.methods.toJSON = function () {
   answer = this;
   const answerObject = answer.toObject();
 
-  delete answerObject.isCorrect;
+  //delete answerObject.isCorrect;
 
   return answerObject;
 };

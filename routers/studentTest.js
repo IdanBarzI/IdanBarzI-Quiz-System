@@ -3,6 +3,7 @@ const auth = require("../middlewares/auth");
 const router = new express.Router();
 const { container } = require("../utils/di-setup");
 const studentTestService = container.resolve("studentTestService");
+const testReportService = container.resolve('testReportService')
 
 router.get('/student-test',auth,async(req,res)=>{
     try {
@@ -49,5 +50,12 @@ router.delete('/student-test:id',async(req,res)=>{
         
     }
 })
+
+
+// router.get("/student-tests/reports/student", auth, async (req, res) => {
+// const field = req.body.field;
+// const tests = await testService.getTestsByfield(field, req.user);
+// res.send( tests);
+// });
 
 module.exports = router

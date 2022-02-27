@@ -43,6 +43,7 @@ class TestCheckService {
             const correctAnswer = await fullTest.questions[i].answers.filter((ans)=>ans.isCorrect===true)
             const newStudentAnswer = new StudentAnswer({
                 answer:studentAnswer[0].selected._id,
+                question:fullTest.questions[i]._id,
                 isSelected:studentAnswer[0].selected._id===correctAnswer[0]._id.toString() ? true:false
             })
             newStudentAnswers.push(newStudentAnswer)

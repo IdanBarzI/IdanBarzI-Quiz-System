@@ -14,6 +14,12 @@ class StudentTestService{
 
     async getAllWithTestId(testId,fromDate,toDate,user){
         const allTests = await StudentTest.find({test:testId,organization:user.organization})
+            .populate({
+                path:"studentAnswers",
+                populate:{
+                    path:"answer"
+                }
+            })
         if(fromDate>toDate){
             return null;
         }

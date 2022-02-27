@@ -6,6 +6,10 @@ const questionSchema = new Schema({
     type: String,
     required: true,
   },
+  details:{
+    type:String,
+    required:false
+  },
   isMultipleAnswers:{
     type:Boolean,
     required:true,

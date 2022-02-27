@@ -11,6 +11,7 @@ const studentTestsRouter = require('./routers/studentTest')
 const testRouter = require('./routers/test')
 const answerRouter = require('./routers/answerRouter')
 const tagsRouter = require('./routers/tags')
+const reportRouter = require('./routers/reportRouter')
 const cors = require("cors");
 const corsOptions = require("./options/corsOptions");
 
@@ -29,6 +30,7 @@ app.use(studentTestsRouter);
 app.use(testRouter)
 app.use(answerRouter)
 app.use(tagsRouter)
+app.use(reportRouter)
 
 app.listen(port, () => {
   console.log(`app listen on port ${port}`);

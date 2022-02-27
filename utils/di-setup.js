@@ -5,7 +5,8 @@ const TestService = require("../services/repositories/test");
 const StudentTestService = require("../services/repositories/studentTestService");
 const AnswerService = require("../services/repositories/answerService");
 const TagService = require("../services/repositories/tagService");
-const TestCheckService = require('../services/testCheck/testCheckService')
+const TestCheckService = require('../services/testCheck/testCheckService');
+const TestReportService = require("../services/report/TestsReportService");
 
 const container = awilix.createContainer({
   injectionMode: awilix.InjectionMode.CLASSIC,
@@ -19,7 +20,8 @@ function setup() {
     studentTestService: awilix.asClass(StudentTestService).singleton(),
     tagService:awilix.asClass(TagService).singleton(),
     answerService: awilix.asClass(AnswerService).singleton(),
-    testCheckService : awilix.asClass(TestCheckService).singleton()
+    testCheckService : awilix.asClass(TestCheckService).singleton(),
+    testReportService:awilix.asClass(TestReportService).singleton()
   });
 }
 

@@ -43,41 +43,48 @@ class QuestionService {
 
   async addQuestion(newQuestion, user) {
     let newTags = [];
-    let newQuestions = []
+    let newQuestions = [];
 
     var tags = newQuestion.tags;
-    for(let tag in tags){
-      const tagFromRepo = await this._tagService.getByTitle(tags[tag].title)
-      if(!tagFromRepo){
-        const newTag = await this._tagService.addTag(tags[tag])
+    for (let tag in tags) {
+      const tagFromRepo = await this._tagService.getByTitle(tags[tag].title);
+      if (!tagFromRepo) {
+        const newTag = await this._tagService.addTag(tags[tag]);
         newTags.push(newTag._id);
-      }
-      else{
+      } else {
         newTags.push(tagFromRepo._id);
       }
     }
 
-    var answers = newQuestion.answers
-    for(let answer in newQuestion.answers){
-      const answerFromRepo = await this._answerService.getByTitle(answers[answer].title)
-      if(!answerFromRepo){
-        const newAnswer = await this._answerService.addAnswer(answers[answer])
+    var answers = newQuestion.answers;
+    for (let answer in newQuestion.answers) {
+      const answerFromRepo = await this._answerService.getByTitle(
+        answers[answer].title
+      );
+      if (!answerFromRepo) {
+        const newAnswer = await this._answerService.addAnswer(answers[answer]);
         newQuestions.push(newAnswer._id.toString());
-      }
-      else{
+      } else {
         newQuestions.push(answerFromRepo._id.toString());
       }
     }
 
     newQuestion.tags = newTags;
-    newQuestion.answers=newQuestions;
+    newQuestion.answers = newQuestions;
 
-
-    const question = new Question(newQuestion); 
+    const question = new Question(newQuestion);
 
     question.organization = user.organization;
+
     await question.save();
-    return  question ;
+
+    const q = await Question.findById(question._id)
+      .populate("answers")
+      .populate("field")
+      .populate("tags")
+      .populate("organization");
+
+    return q;
   }
 
   async updateQuestion(id, question) {

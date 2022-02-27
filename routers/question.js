@@ -50,9 +50,10 @@ router.patch("/qusetions", async (req, res) => {
   }
 });
 
-router.delete("/questions:id", async (req, res) => {
+router.delete("/questions/:id", auth, async (req, res) => {
   try {
-    const question = await questionService.deleteById(req.params.id);
+    const question = await questionService.deleteQuestion(req.params.id);
+    res.send(question);
   } catch (err) {
     res.status(400).send(err);
   }

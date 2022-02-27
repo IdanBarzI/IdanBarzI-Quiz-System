@@ -31,7 +31,7 @@ const StudentTestSchema = new Schema(
     },
     studentAnswers:[{
       type:mongoose.Schema.Types.ObjectId,
-      red:"StudentAnswer",
+      ref:"StudentAnswer",
       required:true
     }],
     certificateUrl: {
