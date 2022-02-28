@@ -9,6 +9,30 @@ class StudentTestService{
 
     async getAll(user){
         const allTests = await StudentTest.find({organization:user.organization})
+            .populate({
+                path:'test',
+                populate:{
+                    path:"questions",
+                    populate:{
+                        path:'answers'
+                    }
+                }
+            })
+            .populate({
+                path:"studentAnswers",
+                populate:{
+                    path:'question',
+                    populate:{
+                        path:'answers'
+                    }
+                }
+            })
+            .populate({
+                path:'studentAnswers',
+                populate:{
+                    path:'answer'
+                }
+            })
         return allTests
     }
 

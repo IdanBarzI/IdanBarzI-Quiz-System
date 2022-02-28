@@ -1,11 +1,21 @@
 const Test = require("../../models/test");
 
 class TestService {
+
+  constructor(){
+
+  }
+
   async getAll(user) {
-    const foundTests = await Test.find({ organization: user.organization })
-      .populate({ path: "questions", populate: { path: "answers" } })
-      .populate("field");
-    return foundTests;
+    try {
+      const foundTests = await Test.find({ organization: user.organization })
+            .populate({path:"questions" ,populate:{path:"answers"}})
+            .populate("field")
+              console.log(foundTests)
+              return foundTests;
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   async getTestsByfield(field, user) {
