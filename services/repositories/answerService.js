@@ -1,16 +1,21 @@
-const Answer = require("../../models/answer")
+const Answer = require("../../models/answer");
 
-class AnswerService{
-    async addAnswer(answer){
-        const newAnswer = new Answer(answer);
-        await newAnswer.save()
-        return newAnswer;
-    }
+class AnswerService {
+  async addAnswer(answer) {
+    const newAnswer = new Answer(answer);
+    await newAnswer.save();
+    return newAnswer;
+  }
 
-    async getByTitle(title){
-        const ans = await Answer.findOne({title:title})
-        return ans;
-    }
+  async getByTitle(title) {
+    const ans = await Answer.findOne({ title: title });
+    return ans;
+  }
+
+  async removeById(id) {
+    const ans = await Answer.findByIdAndRemove(id);
+    return ans;
+  }
 }
 
-module.exports = AnswerService
+module.exports = AnswerService;

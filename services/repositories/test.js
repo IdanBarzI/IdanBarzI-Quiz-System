@@ -1,20 +1,17 @@
 const Test = require("../../models/test");
 
 class TestService {
-
-  constructor(){
-
-  }
+  constructor() {}
 
   async getAll(user) {
     try {
       const foundTests = await Test.find({ organization: user.organization })
-            .populate({path:"questions" ,populate:{path:"answers"}})
-            .populate("field")
-              console.log(foundTests)
-              return foundTests;
+        .populate({ path: "questions", populate: { path: "answers" } })
+        .populate("field");
+      console.log(foundTests);
+      return foundTests;
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -26,13 +23,13 @@ class TestService {
     return foundTests;
   }
 
-  async getTestById(id){
-    const test = await Test.findById(id)
+  async getTestById(id) {
+    const test = await Test.findById(id);
     return test.populate({
-      path:'questions',
-      populate:{
-        path:"answers"
-      }
+      path: "questions",
+      populate: {
+        path: "answers",
+      },
     });
   }
 
@@ -48,8 +45,10 @@ class TestService {
     const testToAdd = new Test(newTest);
     testToAdd.organization = user.organization;
     testToAdd.ownerEmail = user.email;
+    const clientUrl = process.env.LOCAL_CLIENT_URL;
+    testToAdd.testUrl = `${clientUrl}/student/test/${this._id}`;
     await testToAdd.save();
-    return testToAdd ;
+    return testToAdd;
   }
 
   async updateTest(id, test) {

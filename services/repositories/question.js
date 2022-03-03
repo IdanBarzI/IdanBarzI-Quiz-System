@@ -1,12 +1,11 @@
 const Question = require("../../models/question");
-const Test =require('../../models/test')
-
+const Test = require("../../models/test");
+const Answer = require("../../models/answer");
 
 class QuestionService {
-
-  constructor(tagService,answerService){
-    this._tagService = tagService
-    this._answerService = answerService
+  constructor(tagService, answerService) {
+    this._tagService = tagService;
+    this._answerService = answerService;
   }
 
   async getAll(user) {
@@ -34,11 +33,11 @@ class QuestionService {
     return questions;
   }
 
-  async getNumOfTests(id){
-      const tests = await Test.find(test=>{
-        test.question.includes(id)
-      })
-      return tests.length
+  async getNumOfTests(id) {
+    const tests = await Test.find((test) => {
+      test.question.includes(id);
+    });
+    return tests.length;
   }
 
   async addQuestion(newQuestion, user) {
@@ -58,15 +57,9 @@ class QuestionService {
 
     var answers = newQuestion.answers;
     for (let answer in newQuestion.answers) {
-      const answerFromRepo = await this._answerService.getByTitle(
-        answers[answer].title
-      );
-      if (!answerFromRepo) {
-        const newAnswer = await this._answerService.addAnswer(answers[answer]);
-        newQuestions.push(newAnswer._id.toString());
-      } else {
-        newQuestions.push(answerFromRepo._id.toString());
-      }
+      delete answers[answer]._id;
+      const newAnswer = await this._answerService.addAnswer(answers[answer]);
+      newQuestions.push(newAnswer._id.toString());
     }
 
     newQuestion.tags = newTags;
@@ -88,6 +81,23 @@ class QuestionService {
   }
 
   async updateQuestion(id, question) {
+    let newAnswers = [];
+    var answers = question.answers;
+    for (let answerIdx in question.answers) {
+      if (!answers[answerIdx]._id) {
+        const newAnswer = await this._answerService.addAnswer(
+          answers[answerIdx]
+        );
+        newAnswers.push(newAnswer._id.toString());
+      } else {
+        delete answers[answerIdx]._id;
+        const newAnswer = await this._answerService.addAnswer(
+          answers[answerIdx]
+        );
+        newAnswers.push(newAnswer._id.toString());
+      }
+    }
+    question.answers = newAnswers;
     const dbQuestion = await Question.findByIdAndUpdate(
       id,
       {
@@ -97,6 +107,8 @@ class QuestionService {
     );
     return dbQuestion;
   }
+
+  async isNewAnswer(question) {}
 
   async deleteQuestion(id) {
     return await Question.findByIdAndRemove(
