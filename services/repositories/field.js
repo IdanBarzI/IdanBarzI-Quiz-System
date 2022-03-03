@@ -1,4 +1,4 @@
-const Field = require("../models/field");
+const Field = require("../../models/field");
 
 class FieldService {
   async addField(field) {

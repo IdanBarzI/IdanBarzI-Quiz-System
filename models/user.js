@@ -48,13 +48,18 @@ userSchema.methods.toJSON = function () {
 
   delete userObject.password;
   delete userObject.tokens;
+  delete userObject.updatedAt;
+  delete userObject.createdAt;
 
   return userObject;
 };
 
 userSchema.methods.generateAuthToken = async function () {
   user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, "IdanBarzilay123");
+  const token = jwt.sign(
+    { _id: user._id.toString() },
+    process.env.TOKEN_SECRET_KEY
+  );
 
   user.tokens = user.tokens.concat({ token });
   await user.save();

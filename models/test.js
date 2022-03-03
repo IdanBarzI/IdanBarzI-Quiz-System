@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const validator = require("validator");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 
 const testSchema = new Schema(
   {
@@ -37,25 +34,37 @@ const testSchema = new Schema(
       type: String,
       required: true,
     },
-    fields: [
+    field: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Field",
+    },
+    tags: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Field",
+        ref: "Tag",
       },
     ],
-    isReviwable: {
+    isReviewable: {
       type: Boolean,
       default: false,
     },
-    organization : {
+    organization: {
       type: mongoose.Schema.Types.ObjectId,
-      ref:"Organiization"
-    }
+      ref: "Organiization",
+    },
   },
   {
     timestamps: true,
   }
 );
+
+
+testSchema.pre('save',async function(next){
+  const clientUrl= process.env.LOCAL_CLIENT_URL
+  this.testUrl = `${clientUrl}/student/test/${this._id}`;
+  next()
+})
+
 
 const Test = mongoose.model("Test", testSchema);
 module.exports = Test;

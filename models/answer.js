@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const validator = require("validator");
 
 const answerSchema = new Schema({
   title: {
@@ -10,19 +9,14 @@ const answerSchema = new Schema({
   isCorrect: {
     type: Boolean,
     required: true,
-  },
-  isSelected: {
-    type: Boolean,
-    required: true,
-  },
+  }
 });
 
 answerSchema.methods.toJSON = function () {
-  user = this;
-  const answerObject = user.toObject();
+  answer = this;
+  const answerObject = answer.toObject();
 
-  delete answerObject.isCorrect;
-  delete answerObject.tokens;
+  //delete answerObject.isCorrect;
 
   return answerObject;
 };

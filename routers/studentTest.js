@@ -3,6 +3,7 @@ const auth = require("../middlewares/auth");
 const router = new express.Router();
 const { container } = require("../utils/di-setup");
 const studentTestService = container.resolve("studentTestService");
+const testReportService = container.resolve('testReportService')
 
 router.get('/student-test',auth,async(req,res)=>{
     try {
@@ -24,10 +25,20 @@ router.get('/student-test/student',auth,async(req,res)=>{
 
 router.post('/student-test:id',async(req,res)=>{
     try {
-        const studentTest = await studentTestService.addNewStudentExam(req.params.id,req.user)
+        const studentTest = await studentTestService.addNewStudentExam(req.params.id)
         res.status(201).send(studentTest)
     } catch (err) {
         res.status(400).send(err)
+    }
+})
+
+
+router.post('/student-test/finished',async(req,res)=>{
+    try {
+        const newFinishedTest = await studentTestService.addNewStudentExam(req.body)
+        res.status(200).send(newFinishedTest)
+    } catch (err) {
+        res.send(JSON.stringify(err))
     }
 })
 
@@ -39,5 +50,12 @@ router.delete('/student-test:id',async(req,res)=>{
         
     }
 })
+
+
+// router.get("/student-tests/reports/student", auth, async (req, res) => {
+// const field = req.body.field;
+// const tests = await testService.getTestsByfield(field, req.user);
+// res.send( tests);
+// });
 
 module.exports = router
