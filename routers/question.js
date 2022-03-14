@@ -28,9 +28,11 @@ router.get("/question/number-of-tests/:id", auth, async (req, res) => {
 
 router.post("/qusetions", auth, async (req, res) => {
   try {
+    console.log(req.body);
     const newQusetion = await questionService.addQuestion(req.body, req.user);
     res.status(201).send(newQusetion);
   } catch (e) {
+    console.log(e);
     res.status(400).send(e);
   }
 });
@@ -43,7 +45,6 @@ router.patch("/qusetions", auth, async (req, res) => {
     );
     res.send(newQusetion);
   } catch (e) {
-    console.log(e);
     res.status(400).send(e);
   }
 });

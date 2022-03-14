@@ -21,7 +21,7 @@ router.post("/users/login", async (req, res) => {
       req.body.email,
       req.body.password
     );
-    const user = await User.findOne( userr).populate({
+    const user = await User.findOne(userr).populate({
       path: "organization",
       populate: { path: "fields" },
     });
@@ -34,13 +34,12 @@ router.post("/users/login", async (req, res) => {
 
 router.post("/users/logout", auth, async (req, res) => {
   try {
-    console.log(req.user);
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.token;
     });
     await req.user.save();
 
-    res.send();
+    res.send({});
   } catch (e) {
     res.status(500).send();
   }

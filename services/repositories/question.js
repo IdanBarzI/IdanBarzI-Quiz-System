@@ -108,8 +108,6 @@ class QuestionService {
     return dbQuestion;
   }
 
-  async isNewAnswer(question) {}
-
   async deleteQuestion(id) {
     return await Question.findByIdAndRemove(
       { _id: id },
